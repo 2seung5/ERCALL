@@ -12,17 +12,14 @@ public class Diagnosis {
 
     @ManyToOne
     @JoinColumn(name = "emergencyroom_id")
-//    @Column(name = "emergencyroom_id")
     private EmergencyRoom emergencyRoom;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-//    @Column(name = "patient_id")
     private Patient patient;
 
     @ManyToOne
     @JoinColumn(name = "er_triage_id")
-//    @Column(name = "er_triage_id")
     private ErTriage erTriage;
 
 }

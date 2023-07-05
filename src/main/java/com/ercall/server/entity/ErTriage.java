@@ -14,7 +14,6 @@ public class ErTriage {
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-//    @Column(name = "patient_id")
     private Patient patient;
 
     @Column(name = "classifier_name")
