@@ -23,6 +23,8 @@ repositories {
 
 dependencies {
 
+	//template engine (임의)
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
