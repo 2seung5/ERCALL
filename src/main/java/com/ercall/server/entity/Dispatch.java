@@ -1,5 +1,6 @@
 package com.ercall.server.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,5 +31,6 @@ public class Dispatch {
     // 경도
     @Column
     private Double longitude;
+
 
 }
