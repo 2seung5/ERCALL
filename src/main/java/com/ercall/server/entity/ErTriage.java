@@ -61,7 +61,7 @@ public class ErTriage {
     private Integer walkingCheck; //보행여부 없을경우 0 있을경우 1
 
     @Column
-    private Integer ambulance;
+    private Integer ambulance; //사설 여부, 사설아닐경우 0 사설일경우 1
 
     @Column(name = "transfer_hospital") //이송의료기관
     private String transferHospital;

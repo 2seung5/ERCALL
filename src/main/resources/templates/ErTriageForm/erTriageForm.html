@@ -58,6 +58,13 @@
                 <option value="1">보행 가능</option>
             </select>
         </div>
+        <div>
+            <label>사설여부</label><br>
+            <select id="ambulance" name="ambulance">
+                <option value="0">119</option>
+                <option value="1">119 외</option>
+            </select>
+        </div>
 
         <div>
             <button type="button" value="submit" onclick="saveErTriage()">등록</button>
@@ -79,6 +86,7 @@
     var pulse = $("#pulse").val();
     var consciousness = $("#consciousness").val();
     var walkingCheck = $("#walkingCheck").val();
+    var ambulance = $("#ambulance").val();
 
     $.ajax({
         type: 'POST',
@@ -95,7 +103,8 @@
             bloodPressure: bloodPressure,
             pulse: pulse,
             consciousness: consciousness,
-            walkingCheck: walkingCheck
+            walkingCheck: walkingCheck,
+            ambulance : ambulance
 
         })
     }).done(function() {
