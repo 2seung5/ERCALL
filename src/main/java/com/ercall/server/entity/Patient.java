@@ -1,8 +1,14 @@
 package com.ercall.server.entity;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
+import javax.persistence.*;
+@Builder
 @Entity
+@AllArgsConstructor
+@Getter
 public class Patient {
 
     @Id
@@ -18,5 +24,7 @@ public class Patient {
 
     @Column
     private Integer gender;
+
+
 
 }

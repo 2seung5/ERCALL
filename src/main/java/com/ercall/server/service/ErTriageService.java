@@ -4,6 +4,8 @@ import com.ercall.server.dto.ErTriageRequestDto;
 import com.ercall.server.dto.ErTriageResponseDto;
 import com.ercall.server.entity.ErTriage;
 import com.ercall.server.entity.ErTriageRepository;
+import com.ercall.server.entity.Patient;
+import com.ercall.server.entity.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,25 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor //final 필드 생성자 자동생성
 public class ErTriageService {
     private  final ErTriageRepository erTriageRepository;
+    private final PatientRepository patientRepository;
     @Transactional
     public Long save(final ErTriageRequestDto params){ //중증도 분류표 저장
-        ErTriage entity= erTriageRepository.save(params.toEntity());
-        entity.setSortingTime(LocalDateTime.now());
-        return entity.getErTriageId();
+        ErTriage ertriage_entity= params.toEntity();
+
+        Patient patient_entity= Patient.builder() //환자 entity 생성
+                                .patientName(ertriage_entity.getPatientName())
+                                .age(ertriage_entity.getAge())
+                                .gender(ertriage_entity.getGender())
+                                .build();
+        patientRepository.save(patient_entity); //환자 저장
+
+
+        ertriage_entity.setPatient(patient_entity);
+        ertriage_entity.setSortingTime(LocalDateTime.now());
+
+        erTriageRepository.save(ertriage_entity);
+
+        return ertriage_entity.getErTriageId();
     }
 
     public List<ErTriageResponseDto> findAll(){ // 중증도 분류표 가져오기

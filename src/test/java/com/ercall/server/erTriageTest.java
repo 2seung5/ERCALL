@@ -2,6 +2,8 @@ package com.ercall.server;
 
 import com.ercall.server.entity.ErTriage;
 import com.ercall.server.entity.ErTriageRepository;
+import com.ercall.server.entity.Patient;
+import com.ercall.server.entity.PatientRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,9 @@ public class erTriageTest {
     @Autowired
     ErTriageRepository erTriageRepository;
 
+    @Autowired
+    PatientRepository patientRepository;
+
     @Test
     void save(){
         ErTriage params = ErTriage.builder()
@@ -23,6 +28,13 @@ public class erTriageTest {
                 .sortingTime(LocalDateTime.now())
                 .erRating(1)
                 .build();
+
+        Patient pattient= Patient.builder()
+                        .age(11)
+                                .gender(1)
+                                        .patientName("hwang")
+                                                .build();
+        patientRepository.save(pattient);
 
         erTriageRepository.save(params);
 
