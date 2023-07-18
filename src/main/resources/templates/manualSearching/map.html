@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Kakao 지도 시작하기</title>
+</head>
+<body>
+<h1>kakao map api 테스트용</h1>
+<!-- js용 key는 이거
+8db070e1cdb5ba4e7996d5e8c6ce6ffc
+-->
+<div id="map" style="width:500px;height:400px;">
+
+</div>
+<div>
+    <button type="button" id="getMyPosition" onclick="getCurrentPosBtn()">
+        내 위치 가져오기
+    </button>
+</div>
+<p>
+    <a href="/">이전</a>
+</p>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8db070e1cdb5ba4e7996d5e8c6ce6ffc"></script>
+<script>
+      var container = document.getElementById('map');
+      var options = {
+         center: new kakao.maps.LatLng(33.450701, 126.570667),
+         level: 3
+      };
+
+      var map = new kakao.maps.Map(container, options);
+
+      function locationLoadSuccess(pos){
+    // 현재 위치 받아오기
+    var currentPos = new kakao.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
+
+    var currentLat = currentPos.getLat(); //현재 위치의 위도를 반환, NumberType
+    var currentLng = currentPos.getLng(); // 현재 위치의 경도를 반환
+    // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
+    map.panTo(currentPos);
+
+    // 마커 생성
+    var marker = new kakao.maps.Marker({
+        position: currentPos
+
+
+    });
+
+    // 기존에 마커가 있다면 제거
+    marker.setMap(null);
+    marker.setMap(map);
+    };
+
+    function locationLoadError(pos){
+    alert('위치 정보를 가져오는데 실패했습니다.');
+    };
+
+    // 위치 가져오기 버튼 클릭시
+    function getCurrentPosBtn(){
+    navigator.geolocation.getCurrentPosition(locationLoadSuccess,locationLoadError);
+    };
+
+
+   </script>
+</body>
+</html>

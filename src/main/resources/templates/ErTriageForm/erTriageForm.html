@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko"xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>중증도 분류표</title>
+</head>
+<body>
+<h1>중증도 분류표</h1>
+<div class="container">
+    <form id="form">
+        <div>
+            <label for="classifierName">분류자명</label>
+            <input type="text" id="classifierName" name="classifierName" placeholder="분류자명 입력">
+        </div>
+        <div>
+            <label for="patientName">환자명</label>
+            <input type="text" id="patientName" name="patientName" placeholder="환자명 입력">
+        </div>
+        <div>
+            <label for="age">나이</label>
+            <input type="number" id="age"name="age" placeholder="나이 입력">
+        </div>
+        <div>
+            <label for="age">응급도</label>
+            <input type="number" id="erRating"name="erRating" placeholder="응급도 입력">
+        </div>
+        <div>
+            <label>성별</label><br>
+            <select name="gender" id="gender">
+                <option value="0">남</option>
+                <option value="1">여</option>
+            </select>
+        </div>
+        <div>
+            <label>주요손상명</label><br>
+            <input type="text" id="majorInjuryName"name="majorInjuryName"/>
+        </div>
+
+        <div>
+            <label>혈압</label><br>
+            <input type="number" step="0.01" id="bloodPressure" name="bloodPressure"/><br>
+        </div>
+        <div>
+            <label>맥박</label><br>
+            <input type="number" step="0.01" id="pulse" name="pulse"/>
+        </div>
+        <div>
+            <label>의식여부</label><br>
+            <select  id="consciousness"name="consciousness">
+                <option value="0">의식 x</option>
+                <option value="1">의식 o</option>
+            </select>
+        </div>
+        <div>
+            <label>보행 여부</label><br>
+            <select id="walkingCheck" name="walkingCheck">
+                <option value="0">보행 불가</option>
+                <option value="1">보행 가능</option>
+            </select>
+        </div>
+        <div>
+            <label>사설여부</label><br>
+            <select id="ambulance" name="ambulance">
+                <option value="0">119</option>
+                <option value="1">119 외</option>
+            </select>
+        </div>
+
+        <div>
+            <button type="button" value="submit" onclick="saveErTriage()">등록</button>
+        </div>
+
+    </form>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:inline="javascript">
+    function saveErTriage() {
+    var classifierName = $("#classifierName").val();
+    var erRating = $("#erRating").val();
+    var patientName = $("#patientName").val();
+    var gender = $("#gender").val();
+    var age = $("#age").val();
+    var majorInjuryName = $("#majorInjuryName").val();
+    var bloodPressure = $("#bloodPressure").val();
+    var pulse = $("#pulse").val();
+    var consciousness = $("#consciousness").val();
+    var walkingCheck = $("#walkingCheck").val();
+    var ambulance = $("#ambulance").val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/ertriage',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+            classifierName: classifierName,
+            erRating: erRating,
+            patientName: patientName,
+            gender: gender,
+            age: age,
+            gender: gender,
+            majorInjuryName: majorInjuryName,
+            bloodPressure: bloodPressure,
+            pulse: pulse,
+            consciousness: consciousness,
+            walkingCheck: walkingCheck,
+            ambulance : ambulance
+
+        })
+    }).done(function() {
+        alert('ErTriage data has been saved.');
+    }).fail(function (error) {
+        alert(JSON.stringify(error));
+    });
+}
+
+
+
+
+</script>
+</body>
+</html>

@@ -26,6 +26,8 @@ dependencies {
 	implementation 'org.json:org.json:chargebee-1.0'
 
 
+	//template engine (임의)
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
