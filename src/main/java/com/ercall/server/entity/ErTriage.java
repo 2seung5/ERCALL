@@ -1,16 +1,16 @@
 package com.ercall.server.entity;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-=======
+//=======
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
->>>>>>> 2fd5c7fa0964869e97414242a7677328586e912c
+//>>>>>>> 2fd5c7fa0964869e97414242a7677328586e912c
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

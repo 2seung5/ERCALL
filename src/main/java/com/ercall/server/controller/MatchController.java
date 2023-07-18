@@ -42,10 +42,7 @@ public class MatchController {
 
     @Autowired
     private final MatchService matchService;
-    @GetMapping("/hello")
-    public String getHello(){
-        return "hello";
-    }
+
     @PostMapping("/erTriage")
     public String postErName(@RequestBody MatchRequest matchRequest){
         String majorInjuryName = matchRequest.getMajorInjuryName();
@@ -55,5 +52,6 @@ public class MatchController {
 
         return result;
     }
+
 
 }
