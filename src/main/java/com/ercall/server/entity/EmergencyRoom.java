@@ -1,8 +1,11 @@
 package com.ercall.server.entity;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
 @Entity
+@Builder
 public class EmergencyRoom {
 
     @Id
