@@ -2,6 +2,8 @@ package com.ercall.server.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -39,4 +41,9 @@ public class DocumentAttribute {
         return new DocumentAttribute(documents);
     }
 
+    public ArrayList<String> getNameList(List<DocumentAttribute> documentAttributes) {
+        ArrayList<String> nameList = new ArrayList<>();
+        documentAttributes.forEach(s -> nameList.add(s.getPlaceName()));
+        return nameList;
+    }
 }
