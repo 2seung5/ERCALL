@@ -14,7 +14,9 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -45,13 +47,10 @@ public class MatchController {
 
     @PostMapping("/erTriage")
     public String postErName(@RequestBody MatchRequest matchRequest){
-        String majorInjuryName = matchRequest.getMajorInjuryName();
-        String place = matchRequest.getPlace();
 
         String result= String.valueOf(matchService.getErName(matchRequest));
 
         return result;
     }
-
 
 }
