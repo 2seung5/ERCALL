@@ -52,7 +52,10 @@ public class ErTriage {
     private Double bloodPressure; //혈압
 
     @Column
-    private Double pulse; //맥박
+    private Integer pulse; //맥박 없을경우 0 있을 경우 1
+
+    @Column(name= "detailpulse")
+    private Double detailPulse;
 
     @Column
     private Integer consciousness; //의식 없을경우 0 있을경우 1
@@ -60,11 +63,15 @@ public class ErTriage {
     @Column
     private Integer walkingCheck; //보행여부 없을경우 0 있을경우 1
 
+    @Column(name = "canbreath")
+    private Integer canBreath;
+
     @Column
     private Integer ambulance; //사설 여부, 사설아닐경우 0 사설일경우 1
 
     @Column(name = "transfer_hospital") //이송의료기관
     private String transferHospital;
+
 
     @Column(name = "transport_time") //이송(출발)시간
     private LocalDateTime transportTime;
@@ -84,10 +91,12 @@ public class ErTriage {
             ,String place
             ,String majorInjuryName
             ,Double bloodPressure
-            ,Double pulse
+            ,Integer pulse
+            ,Double detailPulse
             ,Integer consciousness
             ,Integer walkingCheck
             ,Integer ambulance
+            ,Integer canBreath
             ,String transferHospital
             ,LocalDateTime transportTime){
         this.classifierName= classifierName;
@@ -100,9 +109,11 @@ public class ErTriage {
         this.majorInjuryName=majorInjuryName;
         this.bloodPressure=bloodPressure;
         this.pulse=pulse;
+        this.detailPulse=detailPulse;
         this.consciousness=consciousness;
         this.walkingCheck=walkingCheck;
         this.ambulance=ambulance;
+        this.canBreath=canBreath;
         this.transferHospital=transferHospital;
         this.transportTime=transportTime;
     }

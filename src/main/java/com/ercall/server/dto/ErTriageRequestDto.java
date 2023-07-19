@@ -4,6 +4,7 @@ import com.ercall.server.entity.ErTriage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,7 +18,9 @@ public class ErTriageRequestDto {
     private Integer age;
     private String majorInjuryName;
     private Double bloodPressure;
-    private Double pulse;
+    private Integer pulse;
+    private Double detailPulse;
+    private Integer canBreath;
     private Integer consciousness;
     private Integer walkingCheck;
     private Integer ambulance;
@@ -31,9 +34,11 @@ public class ErTriageRequestDto {
                 .majorInjuryName(majorInjuryName)
                 .bloodPressure(bloodPressure)
                 .pulse(pulse)
+                .detailPulse(detailPulse)
                 .consciousness(consciousness)
                 .walkingCheck(walkingCheck)
                 .ambulance(ambulance)
+                .canBreath(canBreath)
                 .build();
     }
 }

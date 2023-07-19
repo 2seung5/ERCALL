@@ -21,7 +21,7 @@ public class ErTriageResponseDto {
     private Integer age;
     private String majorInjuryName;
     private Double bloodPressure;
-    private Double pulse;
+    private Integer pulse;
     private Integer consciousness;
     private Integer walkingCheck;
     private Integer ambulance;
