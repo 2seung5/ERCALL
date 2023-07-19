@@ -3,11 +3,12 @@ package com.ercall.server.service;
 
 import com.ercall.server.dto.DocumentAttribute;
 import com.ercall.server.dto.GeoLocation;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,16 +26,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class AutoMatchService {
 
-    private static String Base_URI = "http://localhost:8081"; // ER 서버의 주소
+    private static String Base_URI = "http://localhost:8081/test"; // ER 서버의 주소
     private final static String REQUEST_URI = "https://dapi.kakao.com/v2/local/search/keyword.JSON";
 
     @Value(value = "${kakao.restApi.key}")
     private String REST_API_KEY;
 
-    public String doAutoMatch(GeoLocation geoLocation) {
+    public String doAutoMatch(GeoLocation geoLocation, Long erTriageId) {
         
         List<DocumentAttribute> emergencyRoomList = findNearByEmergencyRoom(geoLocation); // 주변 10km 응급실 조회
-        requestER(emergencyRoomList); // 요청 보내기
+        requestER(emergencyRoomList, erTriageId); // 요청 보내기
         return " ";
     }
 
@@ -76,24 +78,33 @@ public class AutoMatchService {
     }
 
     // 1분마다 범위를 넓혀감
-    public void requestER(List<DocumentAttribute> documentAttributes) {
+    public void requestER(List<DocumentAttribute> documentAttributes, Long erTriageId){
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri;
 
-        WebClient webClient = WebClient.create(Base_URI);
+        // set uri
+        try {
+            uri = new URI(Base_URI);
+        } catch (URISyntaxException e) {
+            log.error("URI 형식 에러");
+            return;
+        }
+
+        // set body
+        HttpEntity body = new HttpEntity(erTriageId);
+
         for(int i=1; i <= 4; i++){
             int requestBoundary = i * 3000;
 
             for (DocumentAttribute documentAttribute : documentAttributes) {
-                if (Integer.parseInt(documentAttribute.getDistance()) < requestBoundary) {      // 현재 검색 범위의 응급실에 요청을 보냄
-
-                    Mono<String> mono = webClient.post().retrieve().bodyToMono(String.class);
-                    mono.subscribe();
-                    documentAttributes.remove(documentAttribute);
+                if (Integer.parseInt(documentAttribute.getDistance()) < requestBoundary) {                  // 현재 검색 범위의 응급실에 요청을 보냄
+                    restTemplate.exchange(uri, HttpMethod.POST, body, String.class);
                 }
             }
 
             try
             {
-                Thread.sleep(60000);
+                Thread.sleep(10000);
             }
             catch (InterruptedException e) {
                 throw new RuntimeException(e);
